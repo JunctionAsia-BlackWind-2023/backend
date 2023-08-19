@@ -1,0 +1,2 @@
+class EngineNoneTypeException(Exception):
+    pass

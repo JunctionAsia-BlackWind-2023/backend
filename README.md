@@ -2,7 +2,7 @@
 
 ## Installation
 ```
-conda install --file requirments.txt
+conda install --file requirements.txt
 ```
 
 ## Execution
