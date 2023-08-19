@@ -1,59 +1,55 @@
+aiosmtplib==2.0.2
 annotated-types==0.5.0
 anyio==3.7.1
-boltons @ file:///C:/ci_311/boltons_1677729932371/work
-brotlipy==0.7.0
-certifi @ file:///C:/b/abs_4a0polqwty/croot/certifi_1683875377622/work/certifi
-cffi @ file:///C:/ci_311/cffi_1676423759166/work
-charset-normalizer @ file:///tmp/build/80754af9/charset-normalizer_1630003229654/work
+blinker==1.6.2
+boto3==1.28.29
+botocore==1.31.29
 click==8.1.7
-colorama @ file:///C:/ci_311/colorama_1676422310965/work
-conda @ file:///C:/b/abs_b5q92oum8h/croot/conda_1689272261421/work
-conda-content-trust @ file:///C:/ci_311/conda-content-trust_1676467587370/work
-conda-libmamba-solver @ file:///C:/b/abs_5a9xvt2a3k/croot/conda-libmamba-solver_1685032355900/work/src
-conda-package-handling @ file:///C:/b/abs_ce4_vcfd0y/croot/conda-package-handling_1685024800103/work
-conda_package_streaming @ file:///C:/b/abs_88a7k_wmm1/croot/conda-package-streaming_1685019697115/work
-cryptography @ file:///C:/b/abs_b28tzldafl/croot/cryptography_1686613103834/work
+colorama==0.4.6
 dnspython==2.4.2
+ecdsa==0.18.0
 email-validator==2.0.0.post2
+exception==0.1.0
+exceptiongroup==1.1.3
 fastapi==0.101.1
+fastapi-mail==1.4.1
+field==0.2.0
+greenlet==2.0.2
 h11==0.14.0
-httpcore==0.17.3
 httptools==0.6.0
-httpx==0.24.1
-idna @ file:///C:/ci_311/idna_1676424932545/work
-itsdangerous==2.1.2
+idna==3.4
+iniconfig==2.0.0
 Jinja2==3.1.2
-jsonpatch @ file:///tmp/build/80754af9/jsonpatch_1615747632069/work
-jsonpointer==2.1
-libmambapy @ file:///C:/b/abs_f0tnqlkcbn/croot/mamba-split_1685993165748/work/libmambapy
+jmespath==1.0.1
+jose==1.0.0
 MarkupSafe==2.1.3
-menuinst @ file:///C:/ci_311/menuinst_1678730372782/work
-orjson==3.9.5
-packaging @ file:///C:/b/abs_ed_kb9w6g4/croot/packaging_1678965418855/work
-pluggy @ file:///C:/ci_311/pluggy_1676422178143/work
-pycosat @ file:///C:/ci_311/pycosat_1676438455539/work
-pycparser @ file:///tmp/build/80754af9/pycparser_1636541352034/work
-pydantic==2.2.0
-pydantic-extra-types==2.0.0
+mysqlclient==2.2.0
+packaging==23.1
+passlib==1.7.4
+pluggy==1.2.0
+pyasn1==0.5.0
+pycryptodome==3.18.0
+pydantic==1.9.1
 pydantic-settings==2.0.3
-pydantic_core==2.6.0
-pyOpenSSL @ file:///C:/b/abs_de215ipd18/croot/pyopenssl_1678965319166/work
-PySocks @ file:///C:/ci_311/pysocks_1676425991111/work
+pydantic_core==2.6.1
+pytest==7.4.0
+python-dateutil==2.8.2
 python-dotenv==1.0.0
-python-multipart==0.0.6
+python-jose==3.3.0
 PyYAML==6.0.1
-requests @ file:///C:/b/abs_41owkd5ymz/croot/requests_1682607524657/work
-ruamel.yaml @ file:///C:/ci_311/ruamel.yaml_1676439214109/work
-six @ file:///tmp/build/80754af9/six_1644875935023/work
+rsa==4.9
+s3transfer==0.6.2
+secret==0.8
+six==1.16.0
 sniffio==1.3.0
+SQLAlchemy==1.4.41
+sqlalchemy2-stubs==0.0.2a35
+sqlmodel==0.0.8
 starlette==0.27.0
-toolz @ file:///C:/ci_311/toolz_1676431406517/work
-tqdm @ file:///C:/b/abs_f76j9hg7pv/croot/tqdm_1679561871187/work
+tabulate==0.9.0
+tomli==2.0.1
 typing_extensions==4.7.1
-ujson==5.8.0
-urllib3 @ file:///C:/b/abs_889_loyqv4/croot/urllib3_1686163174463/work
+urllib3==1.26.16
 uvicorn==0.23.2
 watchfiles==0.19.0
 websockets==11.0.3
-win-inet-pton @ file:///C:/ci_311/win_inet_pton_1676425458225/work
-zstandard==0.19.0
