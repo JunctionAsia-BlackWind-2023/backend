@@ -38,6 +38,7 @@ class Label(SQLModel, table=True):
     amusement_id: Optional[uuid.UUID] = Field(default=None, foreign_key="amusement.id", nullable=True)
     amusement: Optional[Amusement] = Relationship(back_populates="labels")
     wait_time: Optional[datetime.datetime] = Field(default=None, nullable=True)
+    bright_time: Optional[datetime.datetime] = Field(default=None, nullable=True)
     location: Union[str, None]
 
 class Event(SQLModel, table=True):

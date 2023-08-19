@@ -59,9 +59,9 @@ class AmusementService:
             session.refresh(amuse)
             return amuse
         
-    async def count_waiting(amusedment_id: uuid.UUID, user_id: uuid.UUID):
+    async def count_waiting(amusedment_id: uuid.UUID, user: User):
         with get_db_session() as session:
-            statement = select(User,Label).join(Label).where(User.id == user_id)
+            statement = select(User,Label).join(Label).where(User.id == user.id)
             label = session.exec(statement).one_or_none()
             
             if label is None:

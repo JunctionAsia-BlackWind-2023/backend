@@ -15,7 +15,7 @@ router = APIRouter(
 async def pay_nfc(user: User = Depends(get_user_by_nfc_serial), amount:int = Body()):
     return await PayService.pay_nfc(user, amount)
 
-@router.patch("/nfc")
+@router.delete("/nfc")
 async def pay_post(user: User = Depends(get_user_by_nfc_serial)):
     return await PayService.pay_post(user)
 

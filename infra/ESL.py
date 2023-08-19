@@ -1,6 +1,9 @@
 import json, requests
 
-def get_token():
+COMPANY_CODE = 'JC10'
+STORE_CODE = 1111
+
+def request_token():
     url="https://stage00.common.solumesl.com/common/api/v2/token"
     api_headers = {
         "accept": "application/json",
@@ -21,7 +24,8 @@ def get_token():
     return res_message
     
 def turn_on_LED( ESL_token_type, ESL_token, label_code, duration):
-    url=f"https://stage00.common.solumesl.com/common/api/v1/labels/contents/led?company={company_code}"
+
+    url=f"https://stage00.common.solumesl.com/common/api/v1/labels/contents/led?company={COMPANY_CODE}"
     api_headers = {
         "accept": "application/json",
         "Authorization": f"{ESL_token_type} {ESL_token}",
@@ -41,22 +45,44 @@ def turn_on_LED( ESL_token_type, ESL_token, label_code, duration):
     parse = json.loads(info)
     print(parse)
 
-def push_img_on_ESL():
-    pass
+def set_display_page(ESL_token_type, ESL_token, label_codes, page_index):
+    url=f'https://stage00.common.solumesl.com/common/api/v1/labels/contents/page?company={COMPANY_CODE}'
+    api_headers = {
+        "accept":        "application/json",
+        "Authorization": f"{ESL_token_type} {ESL_token}",
+        "Content-Type":  "application/json",
+    }
+    data = {
+        "labels": [ [{
+                "labelCode":    code,
+                "displayPage":  page_index,
+            }for code  in label_codes]
+        ]
+    }
+    res = requests.post(url, data=json.dumps(data), headers=api_headers)
+
+token = None 
+
+def get_token():
+    global token
+    if token is None:
+        token = request_token()
+
+    return token
 
 res = get_token()
-turn_on_LED(
-    ESL_token_type=res["token_type"],
-    ESL_token=res["access_token"],
-    label_code="0848A6EEE1DA",
-    duration="10s"
-    )
+# turn_on_LED(
+#     ESL_token_type=res["token_type"],
+#     ESL_token=res["access_token"],
+#     label_code="0848A6EEE1DA",
+#     duration="10s"
+#     )
 
-broadcast_img(
-    img_base64=trans_img_to_base64("./page1.png"),
-    ESL_token_type=res["token_type"],
-    ESL_token=res["access_token"],
-    label_code="0848A6EEE1DA",
-    front_page=3,
-    page_index=3,
-    )
+# broadcast_img(
+#     img_base64=trans_img_to_base64("./page1.png"),
+#     ESL_token_type=res["token_type"],
+#     ESL_token=res["access_token"],
+#     label_code="0848A6EEE1DA",
+#     front_page=3,
+#     page_index=3,
+#     )

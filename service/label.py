@@ -1,6 +1,9 @@
+import datetime
+import uuid
 from fastapi import HTTPException
 from sqlmodel import select
 from database import get_db_session
+from infra.ESL import get_token, turn_on_LED
 from model import Label
 
 
@@ -20,3 +23,34 @@ class LabelService:
             session.commit()
 
         return label
+    async def get_labels():
+        with get_db_session() as session:
+            labels_statement = select(Label).where(Label)
+
+            labels = session.exec(labels_statement).all()
+
+            return labels
+            
+
+    async def turn_on_led(label_id: uuid.UUID):
+        with get_db_session() as session:
+            statement = select(Label).where(Label.id == label_id)
+            label = session.exec(statement).one_or_none()
+
+            if label is None:
+                raise HTTPException(status_code=404, detail="The label doesn't exist.")
+            
+            token = get_token()
+            turn_on_LED(
+                ESL_token_type=token["token_type"],
+                ESL_token=token["access_token"],
+                label_code=label.physical_id,
+                duration="10s"
+                )
+        
+            label.bright_time = datetime.datetime.utcnow()
+            session.add(label)
+            session.commit()
+            session.refresh(label)
+            return label
+

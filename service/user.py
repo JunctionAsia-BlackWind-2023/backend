@@ -50,6 +50,9 @@ class UserService:
     
     async def match_label(user: User, label:Label):
         with get_db_session() as session:
+            if label.user_id is not None:
+                raise HTTPException(status_code=400, detail="This device is allocated.")
+            
             label.user_id = user.id
             session.add(label)
             session.commit()
@@ -57,3 +60,19 @@ class UserService:
         
         return label
     
+    async def unmatch_label(user:User):
+        with get_db_session() as session:
+            label_statement = select(Label).where(Label.user_id == user.id)
+            label = session.exec(label_statement).one_or_none()
+
+            label.amusement_id = None
+            label.bright_time = None
+            label.user_id = None
+            
+            session.add(label)
+            session.commit()
+            session.refresh(label)
+
+            # default imag
+
+            return label

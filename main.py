@@ -4,7 +4,7 @@ from fastapi import Depends, FastAPI, HTTPException, status
 
 from model import *
 
-from controller import user, label
+from controller import user, label, amusement,pay
 from service.amusement import AmusementService
 from service.label import LabelService
 from service.pay import PayService
@@ -43,7 +43,7 @@ async def init():
     await AmusementService.wait_amusement(amuses[0].id, labels[2].nfc_serial)
     await AmusementService.wait_amusement(amuses[0].id, labels[3].nfc_serial)
 
-    count = await AmusementService.count_waiting(amuses[0].id,users[3].id)
+    count = await AmusementService.count_waiting(amuses[0].id,users[3])
     await AmusementService.take_out_entry(amuses[0].id, 1)
 
     pay_user = await PayService.pay_nfc(users[0], 1000)
@@ -51,6 +51,8 @@ async def init():
     pay_user = await PayService.pay_nfc(pay_user, 3000)
 
     await PayService.pay_post(pay_user)
+
+    await LabelService.turn_on_led(labels[1].id)
     return
 
 @app.on_event("startup")
@@ -71,3 +73,5 @@ async def suceess():
 
 app.include_router(user.router,prefix="/api/v1",)
 app.include_router(label.router, prefix="/api/v1")
+app.include_router(amusement.router,prefix="/api/v1")
+app.include_router(pay.router, prefix="/api/v1")
