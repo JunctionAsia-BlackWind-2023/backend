@@ -13,9 +13,6 @@ rds_connection_database = os.environ.get('DATABASE')
 rds_connection_password = os.environ.get('PASSWARD')
 '''
 
-crypto_key = os.environ.get('CRYPTO_KEY')
-# crypto_key = int(os.environ.get('CRYPTO_KEY')).to_bytes(16, byteorder='big')
-print(crypto_key)
 jwt_key = int(os.environ.get('JWT_KEY')).to_bytes(32, byteorder='big')
 jwt_alorithm = os.environ.get('JWT_ALGORITHM')
 access_token_expire_minutes = int(os.environ.get('ACCESS_TOKEN_EXPIRE_MINUTES'))

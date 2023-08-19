@@ -4,9 +4,9 @@ from datetime import timedelta
 from fastapi import HTTPException,status
 from sqlmodel import select
 from passlib.context import CryptContext
-from authorization.handler import create_access_token, authenticate_user
+from dependency.auth import create_access_token, authenticate_user
 
-from model import User
+from model import Label, User
 
 from database import get_db_session
 
@@ -29,8 +29,8 @@ class UserService:
         with get_db_session() as session:
             session.add(user)
             session.commit()
-
-        return {"message": "Register is successfully done!"}
+            session.refresh(user)
+            return user
 
     async def login(username: str):
         user = authenticate_user(username=username)
@@ -47,5 +47,13 @@ class UserService:
             data={"sub": username}, expires_delta=access_token_expires
         )
         return {"access_token": access_token, "token_type": "bearer"}
-
+    
+    async def match_label(user: User, label:Label):
+        with get_db_session() as session:
+            label.user_id = user.id
+            session.add(label)
+            session.commit()
+            session.refresh(label)
+        
+        return label
     

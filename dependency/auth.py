@@ -24,13 +24,13 @@ class Token(BaseModel):
     token_type: str
 
 class TokenData(BaseModel):
-    email: Union[str, None]
+    username: Union[str, None]
 
 def authenticate_user(username: str):
-        user = get_user(username)
-        if not user:
-            return False
-        return user
+    user = get_user(username)
+    if not user:
+        return False
+    return user
 
 def create_access_token(data: dict, expires_delta: Union[timedelta, None]):
     to_encode = data.copy()

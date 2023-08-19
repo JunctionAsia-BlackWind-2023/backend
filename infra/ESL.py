@@ -1,4 +1,5 @@
 import json, requests
+from typing import List
 
 def get_token():
     url="https://stage00.common.solumesl.com/common/api/v2/token"
@@ -41,6 +42,9 @@ def turn_on_LED(company_code, ESL_token_type, ESL_token, label_code, duration):
     print(parse)
 
 def push_img_on_ESL():
+    pass
+
+def broadcast_img(img, ids: List[str]):
     pass
 
 res = get_token()

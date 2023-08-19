@@ -11,6 +11,7 @@ print(mysql_connection_string)
 engine = create_engine(mysql_connection_string,echo=True)
 
 def create_db_and_tables():
+    SQLModel.metadata.drop_all(engine)
     SQLModel.metadata.create_all(engine)
 
 def get_db_engine()-> Engine:
