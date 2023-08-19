@@ -48,7 +48,7 @@ def turn_on_LED( ESL_token_type, ESL_token, label_code, duration):
 def push_img_on_ESL():
     pass
 
-def set_display_page(ESL_token_type, ESL_token, label_code, page_index):
+def set_display_page(ESL_token_type, ESL_token, label_codes, page_index):
     url=f'https://stage00.common.solumesl.com/common/api/v1/labels/contents/page?company={company_code}'
     api_headers = {
         "accept":        "application/json",
@@ -57,14 +57,14 @@ def set_display_page(ESL_token_type, ESL_token, label_code, page_index):
     }
     data = {
         "labels": [ {
-                "labelCode":    label_code,
+                "labelCode":    label_codes[i],
                 "displayPage":  page_index,
-            }
+            } for i in range(len(label_codes))
         ]
     }
     res = requests.post(url, data=json.dumps(data), headers=api_headers)
 
-def broadcast_img(img_base64, ESL_token_type, ESL_token, label_code, front_page, page_index):
+def broadcast_img(img_base64, ESL_token_type, ESL_token, label_codes, front_page, page_index):
     url=f"https://stage00.common.solumesl.com/common/api/v1/labels/contents/image?company={company_code}&stationCode={station_code}"
 
     api_headers = {
@@ -74,7 +74,7 @@ def broadcast_img(img_base64, ESL_token_type, ESL_token, label_code, front_page,
     }
     data = {
         "labels": [ {
-                "labelCode": label_code,
+                "labelCode": label_codes[i],
                 "frontPage": front_page,
                 
                 "contents": [
@@ -85,7 +85,7 @@ def broadcast_img(img_base64, ESL_token_type, ESL_token, label_code, front_page,
                     "skipChecksumValidation": "true"
                     }
                 ]
-            }
+            } for i in range(len(label_codes))
         ]
     }
     res = requests.post(url, data=json.dumps(data), headers=api_headers)
