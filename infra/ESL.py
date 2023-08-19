@@ -73,6 +73,7 @@ def set_display_page(ESL_token_type, ESL_token, label_code, page_index):
             }
         ]
     }
+    res = requests.post(url, data=json.dumps(data), headers=api_headers)
 
 def broadcast_img(img_base64, ESL_token_type, ESL_token, label_code, front_page, page_index):
     url=f"https://stage00.common.solumesl.com/common/api/v1/labels/contents/image?company={company_code}&stationCode={station_code}"
