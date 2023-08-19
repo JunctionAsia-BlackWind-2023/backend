@@ -1,21 +1,9 @@
 import json, requests
-import base64
 
-# PNG 파일 경로
-png_file_path = "example.png"
+COMPANY_CODE = 'JC10'
+STORE_CODE = 1111
 
-# PNG 파일 읽기
-
-
-def trans_img_to_base64(src):
-    with open(src, "rb") as img_file:
-        base64_encoded = base64.b64encode(img_file.read()).decode("utf-8")
-        return base64_encoded
-
-company_code = "JC10"
-station_code = "1111"
-
-def get_token():
+def request_token():
     url="https://stage00.common.solumesl.com/common/api/v2/token"
     api_headers = {
         "accept":       "application/json",
@@ -36,7 +24,8 @@ def get_token():
     return res_message
     
 def turn_on_LED( ESL_token_type, ESL_token, label_code, duration):
-    url=f"https://stage00.common.solumesl.com/common/api/v1/labels/contents/led?company={company_code}"
+
+    url=f"https://stage00.common.solumesl.com/common/api/v1/labels/contents/led?company={COMPANY_CODE}"
     api_headers = {
         "accept":        "application/json",
         "Authorization": f"{ESL_token_type} {ESL_token}",
@@ -99,19 +88,24 @@ def broadcast_img(img_base64, ESL_token_type, ESL_token, label_code, front_page,
             }
         ]
     }
-
     res = requests.post(url, data=json.dumps(data), headers=api_headers)
 
-    info = res.text
-    parse = json.loads(info)
+token = None 
+
+def get_token():
+    global token
+    if token is None:
+        token = request_token()
+
+    return token
 
 res = get_token()
-turn_on_LED(
-    ESL_token_type=res["token_type"],
-    ESL_token=res["access_token"],
-    label_code="0848A6EEE1DA",
-    duration="10s"
-    )
+# turn_on_LED(
+#     ESL_token_type=res["token_type"],
+#     ESL_token=res["access_token"],
+#     label_code="0848A6EEE1DA",
+#     duration="10s"
+#     )
 
 broadcast_img(
     img_base64=trans_img_to_base64("./page1.png"),
