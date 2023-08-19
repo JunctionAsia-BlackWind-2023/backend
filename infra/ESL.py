@@ -18,7 +18,7 @@ station_code = "1111"
 def get_token():
     url="https://stage00.common.solumesl.com/common/api/v2/token"
     api_headers = {
-        "accept": "application/json",
+        "accept":       "application/json",
         "Content-Type": "application/json",
     }
     data = {
@@ -31,23 +31,23 @@ def get_token():
     parse = json.loads(info)
     
     print(parse)
-        
+
     res_message = parse["responseMessage"]
     return res_message
     
 def turn_on_LED( ESL_token_type, ESL_token, label_code, duration):
     url=f"https://stage00.common.solumesl.com/common/api/v1/labels/contents/led?company={company_code}"
     api_headers = {
-        "accept": "application/json",
+        "accept":        "application/json",
         "Authorization": f"{ESL_token_type} {ESL_token}",
-        "Content-Type": "application/json"
+        "Content-Type":  "application/json"
     }
     data = {
         "labelCode": label_code,
-        "color": "RED",
-        "duration": duration,
+        "color":     "RED",
+        "duration":  duration,
         "patternId": "0",
-        "multiLed": "false",
+        "multiLed":  "false",
     }
 
     res = requests.put(url, data=json.dumps([data]), headers=api_headers)
@@ -59,13 +59,28 @@ def turn_on_LED( ESL_token_type, ESL_token, label_code, duration):
 def push_img_on_ESL():
     pass
 
+def set_display_page(ESL_token_type, ESL_token, label_code, page_index):
+    url=f'https://stage00.common.solumesl.com/common/api/v1/labels/contents/page?company={company_code}'
+    api_headers = {
+        "accept":        "application/json",
+        "Authorization": f"{ESL_token_type} {ESL_token}",
+        "Content-Type":  "application/json",
+    }
+    data = {
+        "labels": [ {
+                "labelCode":    label_code,
+                "displayPage":  page_index,
+            }
+        ]
+    }
+
 def broadcast_img(img_base64, ESL_token_type, ESL_token, label_code, front_page, page_index):
     url=f"https://stage00.common.solumesl.com/common/api/v1/labels/contents/image?company={company_code}&stationCode={station_code}"
 
     api_headers = {
-        "accept": "application/json",
+        "accept":        "application/json",
         "Authorization": f"{ESL_token_type} {ESL_token}",
-        "Content-Type": "application/json",
+        "Content-Type":  "application/json",
     }
     data = {
         "labels": [ {
@@ -75,8 +90,8 @@ def broadcast_img(img_base64, ESL_token_type, ESL_token, label_code, front_page,
                 "contents": [
                     {
                     "contentType": "image",
-                    "imgBase64": img_base64,
-                    "pageIndex": page_index,
+                    "imgBase64":    img_base64,
+                    "pageIndex":    page_index,
                     "skipChecksumValidation": "true"
                     }
                 ]
@@ -102,6 +117,6 @@ broadcast_img(
     ESL_token_type=res["token_type"],
     ESL_token=res["access_token"],
     label_code="0848A6EEE1DA",
-    front_page=3,
-    page_index=3,
+    front_page=2,
+    page_index=2,
     )
