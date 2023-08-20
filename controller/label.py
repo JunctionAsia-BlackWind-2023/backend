@@ -23,5 +23,5 @@ async def get_labels():
     return await LabelService.get_labels()
 
 @router.patch("/{label_id}")
-async def turn_on_led(label_id: uuid.UUID):
-    return await LabelService.turn_on_led(label_id)
+async def find_label(label_id: uuid.UUID):
+    return await LabelService.find_label(label_id)

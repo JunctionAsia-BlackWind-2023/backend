@@ -46,7 +46,7 @@ class LabelService:
                 img_base64=trans_img_to_base64("./resource/ESL-alert.png"),
                 ESL_token_type=token["token_type"],
                 ESL_token=token["access_token"],
-                label_codes=[label.physical_number],
+                label_codes=[label.physical_id],
                 front_page=3,
                 page_index=3,
                 )
@@ -54,7 +54,7 @@ class LabelService:
             set_display_page(
                 ESL_token_type=token["token_type"],    
                 ESL_token=token["access_token"],
-                label_codes=[label.physical_number],
+                label_codes=[label.physical_id],
                 page_index=3,
             )
                 
@@ -62,7 +62,7 @@ class LabelService:
                 ESL_token_type=token["token_type"],
                 ESL_token=token["access_token"],
                 label_code=label.physical_id,
-                duration="10s"
+                duration="60s"
                 )
         
             label.bright_time = datetime.datetime.utcnow()
