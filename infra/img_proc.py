@@ -20,8 +20,8 @@ def create_locker_num_img(num):
 
     return locker_num_image
 
-def create_ESL_locker_img(num):
-    original_image = Image.open('ESL-locker.png')
+def create_ESL_locker_img(origin_img_src, num):
+    original_image = Image.open(origin_img_src)
 
     width = 250
     height = 122

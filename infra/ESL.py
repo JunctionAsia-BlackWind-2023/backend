@@ -1,7 +1,13 @@
 import json, requests
+import base64
 
 COMPANY_CODE = 'JC10'
 STORE_CODE = 1111
+
+def trans_img_to_base64(src):
+    with open(src, "rb") as img_file:
+        base64_encoded = base64.b64encode(img_file.read()).decode("utf-8")
+        return base64_encoded
 
 def request_token():
     url="https://stage00.common.solumesl.com/common/api/v2/token"
@@ -49,7 +55,7 @@ def push_img_on_ESL():
     pass
 
 def set_display_page(ESL_token_type, ESL_token, label_codes, page_index):
-    url=f'https://stage00.common.solumesl.com/common/api/v1/labels/contents/page?company={company_code}'
+    url=f'https://stage00.common.solumesl.com/common/api/v1/labels/contents/page?company={COMPANY_CODE}'
     api_headers = {
         "accept":        "application/json",
         "Authorization": f"{ESL_token_type} {ESL_token}",
@@ -65,7 +71,7 @@ def set_display_page(ESL_token_type, ESL_token, label_codes, page_index):
     res = requests.post(url, data=json.dumps(data), headers=api_headers)
 
 def broadcast_img(img_base64, ESL_token_type, ESL_token, label_codes, front_page, page_index):
-    url=f"https://stage00.common.solumesl.com/common/api/v1/labels/contents/image?company={company_code}&stationCode={station_code}"
+    url=f"https://stage00.common.solumesl.com/common/api/v1/labels/contents/image?company={COMPANY_CODE}&stationCode={STORE_CODE}"
 
     api_headers = {
         "accept":        "application/json",
@@ -99,14 +105,14 @@ def get_token():
 
     return token
 
-res = get_token()
+#res = get_token()
 # turn_on_LED(
 #     ESL_token_type=res["token_type"],
 #     ESL_token=res["access_token"],
 #     label_code="0848A6EEE1DA",
 #     duration="10s"
 #     )
-
+'''
 broadcast_img(
     img_base64=trans_img_to_base64("./page1.png"),
     ESL_token_type=res["token_type"],
@@ -115,3 +121,4 @@ broadcast_img(
     front_page=2,
     page_index=2,
     )
+'''
