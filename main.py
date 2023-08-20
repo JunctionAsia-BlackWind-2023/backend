@@ -13,11 +13,12 @@ from fastapi.middleware.cors import CORSMiddleware
 app = FastAPI()
 
 async def init():
-    labels = await asyncio.gather(*[LabelService.register_label('0848A6D2E1D5','02:FE:42:2C:F3:0D:51:A1',523),
-    LabelService.register_label('0848A6EEE1DA','02:FE:42:2C:F3:72:24:95',121),
-    LabelService.register_label('0848A6E0E1D4','02:FE:42:2C:F3:72:21:8D',247),
-    LabelService.register_label('0848A729E1D0','02:FE:42:2C:F3:72:14:8D',712),
-    LabelService.register_label('0848A705E1DE','02:FE:42:2C:F3:72:2C:99',483)])
+    labels = await asyncio.gather(*[
+    LabelService.register_label('0848A6D2E1D5','02FE422CF30D51A1',523),
+    LabelService.register_label('0848A6EEE1DA','02FE422CF3722495',121),
+    LabelService.register_label('0848A6E0E1D4','02FE422CF372218D',247),
+    LabelService.register_label('0848A729E1D0','02FE422CF372148D',712),
+    LabelService.register_label('0848A705E1DE','02FE422CF3722C99',483)])
 
     users = await asyncio.gather(*[UserService.register_user('sangmin', 'admin'),
     UserService.register_user('woojin', 'admin'),
