@@ -5,7 +5,7 @@ from sqlalchemy import update
 from sqlmodel import select
 from database import get_db_session
 from model import Amusement, Label, User
-from service.dto.amusement import CountWaitingDTO
+from service.dto.amusement import AmuseDTO, CountWaitingDTO
 
 class AmusementService:
     async def register_amusement(name: str):
@@ -17,6 +17,14 @@ class AmusementService:
             session.refresh(amusement)
 
         return amusement
+    
+    async def get_amusements():
+        with get_db_session() as session:
+            
+            statement = select(Amusement)
+            amuses = session.exec(statement).all()
+
+            return [AmuseDTO(name=a.name, wait=(len(a.labels))) for a in amuses]
     
     async def wait_amusement(amusement_id: uuid.UUID, nfc_serial: str):
         with get_db_session() as session:

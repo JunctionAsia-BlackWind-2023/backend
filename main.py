@@ -9,7 +9,7 @@ from service.amusement import AmusementService
 from service.label import LabelService
 from service.pay import PayService
 from service.user import UserService
-
+from fastapi.middleware.cors import CORSMiddleware
 app = FastAPI()
 
 async def init():
@@ -53,6 +53,7 @@ async def init():
     await PayService.pay_post(pay_user)
 
     await LabelService.turn_on_led(labels[1].id)
+    print(labels[0])
     return
 
 @app.on_event("startup")
@@ -70,6 +71,21 @@ async def suceess():
     create_db_and_tables()
     await init()
     return {"message": "Success"}
+origins = [
+    "http://localhost.tiangolo.com",
+    "https://localhost.tiangolo.com",
+    "http://localhost",
+    "http://localhost:8080",
+    "http://localhost:8000",
+    "http://localhost:3000",
+]
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 app.include_router(user.router,prefix="/api/v1",)
 app.include_router(label.router, prefix="/api/v1")

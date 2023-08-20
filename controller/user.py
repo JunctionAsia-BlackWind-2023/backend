@@ -33,10 +33,10 @@ async def login_for_access_token(form_data: LoginRequestParam):
 class MatchingLabelDTO(BaseModel):
     locker_number: int
 
-@router.post("/:id/label")
+@router.post("/label")
 async def match_label(user: User = Depends(get_current_user),label: Label = Depends(get_label)):
     return await UserService.match_label(user, label)
 
-@router.delete("/:id/label")
+@router.delete("/label")
 async def unmatch_label(user: User = Depends(get_user_by_nfc_serial)):
     return await UserService.unmatch_label(user)

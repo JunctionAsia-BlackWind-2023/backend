@@ -3,8 +3,9 @@ import uuid
 from fastapi import HTTPException
 from sqlmodel import select
 from database import get_db_session
-from infra.ESL import get_token, turn_on_LED
+from infra.ESL import broadcast_img, get_token, set_display_page, trans_img_to_base64, turn_on_LED
 from model import Label
+from service.dto.labelList import LabelItemDTO
 
 
 class LabelService:
@@ -21,15 +22,15 @@ class LabelService:
         with get_db_session() as session:
             session.add(label)
             session.commit()
+            session.refresh(label)
 
         return label
     async def get_labels():
         with get_db_session() as session:
-            labels_statement = select(Label).where(Label)
-
+            labels_statement = select(Label)
             labels = session.exec(labels_statement).all()
 
-            return labels
+            return [LabelItemDTO(label_id=l.id, label_physical_id=l.physical_id, locker_number=l.locker_number, cost= None if l.user is None else l.user.cost) for l in labels]
             
 
     async def turn_on_led(label_id: uuid.UUID):
@@ -41,6 +42,22 @@ class LabelService:
                 raise HTTPException(status_code=404, detail="The label doesn't exist.")
             
             token = get_token()
+            broadcast_img(
+                img_base64=trans_img_to_base64("./infra/ESL-alert.png"),
+                ESL_token_type=token["token_type"],
+                ESL_token=token["access_token"],
+                label_codes=["0848A6EEE1DA"],
+                front_page=3,
+                page_index=3,
+                )
+
+            set_display_page(
+                ESL_token_type=token["token_type"],    
+                ESL_token=token["access_token"],
+                label_codes=["0848A6EEE1DA"],
+                page_index=3,
+            )
+                
             turn_on_LED(
                 ESL_token_type=token["token_type"],
                 ESL_token=token["access_token"],

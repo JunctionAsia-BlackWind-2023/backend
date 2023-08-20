@@ -12,6 +12,7 @@ class User(SQLModel, table=True):
     username:   str
     permission: str
     cost: int = Field(default=0)
+    label: Optional["Label"] = Relationship(back_populates="user")
 
 class Amusement(SQLModel, table=True):
     id: uuid.UUID = Field(
@@ -30,7 +31,8 @@ class Label(SQLModel, table=True):
         index=True,
         nullable=False,
     )
-    user_id:     uuid.UUID = Field(default=None,foreign_key="user.id",nullable=True)
+    user_id: uuid.UUID = Field(default=None,foreign_key="user.id",nullable=True)
+    user: Optional[User] = Relationship(back_populates="label")
     nfc_serial: str 
     physical_id: str # = Field(default=None,foreign_key="physical.id",nullable=False)
     locker_number: int

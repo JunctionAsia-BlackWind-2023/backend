@@ -1,5 +1,5 @@
 import uuid
-from fastapi import APIRouter
+from fastapi import APIRouter, Query
 from pydantic import BaseModel
 from service.label import LabelService
 
@@ -22,6 +22,6 @@ async def register_label(param : RegisterLabelDTO):
 async def get_labels():
     return await LabelService.get_labels()
 
-@router.patch("/:id")
+@router.patch("/{label_id}")
 async def turn_on_led(label_id: uuid.UUID):
     return await LabelService.turn_on_led(label_id)
