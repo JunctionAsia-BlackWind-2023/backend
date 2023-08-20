@@ -5,6 +5,7 @@ from fastapi import HTTPException,status
 from sqlmodel import select
 from passlib.context import CryptContext
 from dependency.auth import create_access_token, authenticate_user
+from infra.ESL import get_token
 
 from model import Label, User
 
