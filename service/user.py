@@ -12,6 +12,7 @@ from database import get_db_session
 
 from secret import access_token_expire_minutes
 
+from infra.ESL import get_token, match_display
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
@@ -57,6 +58,13 @@ class UserService:
             session.add(label)
             session.commit()
             session.refresh(label)
+        
+        res = get_token()
+        match_display(
+            res_token=res,
+            label_code=label.physical_id,
+            locker_num=label.locker_number
+        )
         
         return label
     
