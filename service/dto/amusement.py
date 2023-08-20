@@ -1,5 +1,6 @@
 
 
+import uuid
 from pydantic import BaseModel
 
 class CountWaitingDTO(BaseModel):
@@ -8,3 +9,4 @@ class CountWaitingDTO(BaseModel):
 class AmuseDTO(BaseModel):
     name: str
     wait: int
+    id: uuid.UUID

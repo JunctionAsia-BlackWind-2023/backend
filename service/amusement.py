@@ -24,7 +24,7 @@ class AmusementService:
             statement = select(Amusement)
             amuses = session.exec(statement).all()
 
-            return [AmuseDTO(name=a.name, wait=(len(a.labels))) for a in amuses]
+            return [AmuseDTO(name=a.name, id=a.id, wait=(len(a.labels))) for a in amuses]
     
     async def wait_amusement(amusement_id: uuid.UUID, nfc_serial: str):
         with get_db_session() as session:

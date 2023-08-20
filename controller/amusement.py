@@ -16,7 +16,7 @@ async def register_amusement(name:str):
     return await AmusementService.register_amusement(name)
 
 @router.post("/{amusement_id}")
-async def wait_amusement(amusement_id: uuid.UUID, nfc_serial: str =  Body()):
+async def wait_amusement(amusement_id: uuid.UUID, nfc_serial: str =  Query()):
     return await AmusementService.wait_amusement(amusement_id, nfc_serial)
 
 @router.patch("/{amusement_id}")
@@ -26,3 +26,7 @@ async def take_out_entry(amusement_id: uuid.UUID, num_entries:int = Body()):
 @router.get("/{amusement_id}/count")
 async def count_waiting(amusement_id: uuid.UUID, user: User = Depends(get_current_user)):
     return await AmusementService.count_waiting(amusement_id, user)
+
+@router.get("/")
+async def get_amusements():
+    return await AmusementService.get_amusements()
