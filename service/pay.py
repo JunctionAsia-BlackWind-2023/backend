@@ -21,9 +21,9 @@ class PayService:
             return user
     async def pay_post(user: User):
         with get_db_session() as session:
-            user.cost = 0
+            user.User.cost = 0
 
-            session.add(user)
+            session.add(user.User)
             session.commit()
-            session.refresh(user)
+            session.refresh(user.User)
             return user
