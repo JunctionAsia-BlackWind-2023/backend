@@ -1,3 +1,4 @@
+import base64
 import json, requests
 import base64
 
@@ -75,7 +76,11 @@ def set_display_page(ESL_token_type, ESL_token, label_codes, page_index):
     parse = json.loads(info)
     print(parse)
 def broadcast_img(img_base64, ESL_token_type, ESL_token, label_codes, front_page, page_index):
+<<<<<<< HEAD
     url=f"https://stage00.common.solumesl.com/common/api/v1/labels/contents/image?company={COMPANY_CODE}&stationCode={STORE_CODE}"
+=======
+    url=f"https://stage00.common.solumesl.com/common/api/v1/labels/contents/image?company={COMPANY_CODE}&stationCode={station_code}"
+>>>>>>> 530e8d9487cfb097c1a8395aab5f55789c93d0d4
 
     api_headers = {
         "accept":        "application/json",
@@ -100,6 +105,11 @@ def broadcast_img(img_base64, ESL_token_type, ESL_token, label_codes, front_page
     }   
     res = requests.post(url, data=json.dumps(data), headers=api_headers)
 
+def trans_img_to_base64(src):
+    with open(src, "rb") as img_file:
+        base64_encoded = base64.b64encode(img_file.read()).decode("utf-8")
+        return base64_encoded
+    
 token = None 
 
 def get_token():
