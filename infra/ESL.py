@@ -105,7 +105,7 @@ def get_token():
 
     return token
 
-res = get_token()
+# res = get_token()
 # turn_on_LED(
 #     ESL_token_type=res["token_type"],
 #     ESL_token=res["access_token"],
@@ -113,11 +113,11 @@ res = get_token()
 #     duration="10s"
 #     )
 
-broadcast_img(
-    img_base64=trans_img_to_base64("./page1.png"),
-    ESL_token_type=res["token_type"],
-    ESL_token=res["access_token"],
-    label_code="0848A6EEE1DA",
-    front_page=2,
-    page_index=2,
-    )
+# broadcast_img(
+#     img_base64=trans_img_to_base64("./page1.png"),
+#     ESL_token_type=res["token_type"],
+#     ESL_token=res["access_token"],
+#     label_code="0848A6EEE1DA",
+#     front_page=2,
+#     page_index=2,
+#     )
