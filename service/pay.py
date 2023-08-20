@@ -9,11 +9,14 @@ class PayService:
             raise HTTPException(status_code=400, detail="This amount is invalid cost.")
         
         with get_db_session() as session:
-            user.cost += amount
+            
+            user.User.cost += amount
 
-            session.add(user)
+            session.add(user.User)
             session.commit()
-            session.refresh(user)
+            session.refresh(user.User)
+
+            return user
 
             return user
     async def pay_post(user: User):

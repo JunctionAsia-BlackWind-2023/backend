@@ -13,7 +13,7 @@ async def get_user_by_nfc_serial(nfc_serial: str):
         statement = select(User,Label).where(Label.nfc_serial == nfc_serial).join(User)
         user = session.exec(statement).one_or_none()
 
-        if user is not None:
+        if user is None:
             raise HTTPException(status_code=400, detail="This label is not matched with user.")
         
         return user
