@@ -20,7 +20,7 @@ def create_locker_num_img(num):
 
     return locker_num_image
 
-def create_ESL_locker_img(origin_img_src, num):
+def create_ESL_locker_img(origin_img_src, save_src,num):
     original_image = Image.open(origin_img_src)
 
     width = 250
@@ -34,7 +34,7 @@ def create_ESL_locker_img(origin_img_src, num):
 
     # 이미지 삽입
     original_image.paste(insert_image, (insert_left, insert_top))
-    original_image.save(f'ESL-locker-{num}.png')
+    original_image.save(f'{save_src}/ESL-locker-{num}.png')
 
 
 

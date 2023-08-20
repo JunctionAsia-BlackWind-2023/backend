@@ -1,6 +1,8 @@
 import json, requests
 import base64
 
+from infra.img_proc import create_ESL_locker_img
+
 COMPANY_CODE = 'JC10'
 STORE_CODE = 1111
 
@@ -69,7 +71,9 @@ def set_display_page(ESL_token_type, ESL_token, label_codes, page_index):
         ]
     }
     res = requests.post(url, data=json.dumps(data), headers=api_headers)
-
+    info = res.text
+    parse = json.loads(info)
+    print(parse)
 def broadcast_img(img_base64, ESL_token_type, ESL_token, label_codes, front_page, page_index):
     url=f"https://stage00.common.solumesl.com/common/api/v1/labels/contents/image?company={COMPANY_CODE}&stationCode={STORE_CODE}"
 
@@ -93,7 +97,7 @@ def broadcast_img(img_base64, ESL_token_type, ESL_token, label_codes, front_page
                 ]
             } for i in range(len(label_codes))
         ]
-    }
+    }   
     res = requests.post(url, data=json.dumps(data), headers=api_headers)
 
 token = None 
@@ -104,6 +108,28 @@ def get_token():
         token = request_token()
 
     return token
+
+def match_display(res_token, label_code, locker_num):
+    create_ESL_locker_img(
+        origin_img_src="./resource/ESL-locker.png",
+        save_src="./resource",
+        num=locker_num
+    )
+    
+    broadcast_img(
+        img_base64=trans_img_to_base64(f"./resource/ESL-locker-{locker_num}.png"),
+        ESL_token_type=res_token["token_type"],
+        ESL_token=res_token["access_token"],
+        label_codes=[label_code],
+        front_page=1,
+        page_index=1,
+        )
+    set_display_page(
+        ESL_token_type=res_token["token_type"],
+        ESL_token=res_token["access_token"],
+        label_codes=[label_code],
+        page_index=1,
+    )
 
 #res = get_token()
 # turn_on_LED(
