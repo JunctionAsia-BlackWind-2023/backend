@@ -33,7 +33,7 @@ class LabelService:
             return [LabelItemDTO(label_id=l.id, label_physical_id=l.physical_id, locker_number=l.locker_number, cost= None if l.user is None else l.user.cost) for l in labels]
             
 
-    async def turn_on_led(label_id: uuid.UUID):
+    async def find_label(label_id: uuid.UUID):
         with get_db_session() as session:
             statement = select(Label).where(Label.id == label_id)
             label = session.exec(statement).one_or_none()
@@ -43,10 +43,10 @@ class LabelService:
             
             token = get_token()
             broadcast_img(
-                img_base64=trans_img_to_base64("./infra/ESL-alert.png"),
+                img_base64=trans_img_to_base64("./resource/ESL-alert.png"),
                 ESL_token_type=token["token_type"],
                 ESL_token=token["access_token"],
-                label_codes=["0848A6EEE1DA"],
+                label_codes=[label.physical_number],
                 front_page=3,
                 page_index=3,
                 )
@@ -54,7 +54,7 @@ class LabelService:
             set_display_page(
                 ESL_token_type=token["token_type"],    
                 ESL_token=token["access_token"],
-                label_codes=["0848A6EEE1DA"],
+                label_codes=[label.physical_number],
                 page_index=3,
             )
                 

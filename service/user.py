@@ -5,6 +5,7 @@ from fastapi import HTTPException,status
 from sqlmodel import select
 from passlib.context import CryptContext
 from dependency.auth import create_access_token, authenticate_user
+from infra.ESL import get_token
 
 from model import Label, User
 
@@ -57,6 +58,13 @@ class UserService:
             session.add(label)
             session.commit()
             session.refresh(label)
+        
+        res = get_token()
+        match_display(
+            res_token=res,
+            label_code=label.physical_id,
+            locker_num=label.locker_number
+        )
         
         return label
     
